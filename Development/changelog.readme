@@ -1,0 +1,104 @@
+﻿************************************************************************************************************
+____________________________________________________________________________________________________________
+[x] Added A Persistence Mechanism To Server Core                                  | 01/07/2018 - 14.27.35 PM
+============================================================================================================
+
+	[o] Revision: 6dff3478c82752ddd50bde347c29968274e3e927
+        Author: Ravenwolfe <brian@tindomorgans.com>
+
+        Date: 8/31/2017 3:31:37 PM
+
+		File Updated From: 
+        https://github.com/runuo/runuo.git
+
+        Message:
+		Add persistence mechanism for serialization to files. *Requires Core Recompile*
+
+        ----
+		Added: Server/Engines/Save.cs
+
+____________________________________________________________________________________________________________
+[x] Fixed An Issue With Status Bars Not Updating                                  | 04/12/2017 - 19.12.24 PM
+============================================================================================================
+
+    [o] Revision: e62fc4964afe66b9595e42ca1fa711d2dc0cb2de
+        Author: LG Archer <admin@vita-nex.com>
+
+        Date: 3/30/2017 4:04:23 PM
+
+        File Updated From: 
+        https://github.com/runuo/runuo.git
+
+        Message:
+        Fix issues with status bars not updating.     
+        The health bar status updates do not require prerequisite checks as they use flags within 
+        the packet to determine the proper state of being yellow or green or both.
+
+        ----
+        Modified: Server/Mobile.cs
+
+____________________________________________________________________________________________________________
+[x] Basic Mysticim Spell System Support Added                                     | 04/12/2017 - 17.38.42 PM
+============================================================================================================
+
+    [o] Revision: 638669a6999a94921e8d9844edda4e2b08eef1eb
+        Author: Mark Sturgill <msturgill@users.noreply.github.com>
+
+        Date: 3/21/2017 1:40:02 PM
+
+        File Updated From: 
+        https://github.com/runuo/runuo.git
+
+        Message:
+        Basic support for mysticism spells
+
+        ----
+        Modified: Scripts/Engines/Craft/Core/CraftItem.cs
+        Modified: Scripts/Engines/Craft/DefInscription.cs
+
+        Modified: Scripts/Items/Resources/Reagents/DeadWood.cs
+
+        Modified: Scripts/Items/Skill Items/Magical/Spellbook.cs
+
+        Modified: Scripts/Scripts.csproj
+
+        Modified: Scripts/Spells/Initializer.cs
+        Modified: Scripts/Spells/Reagent.cs
+
+        Added: Scripts/Items/Resources/Reagents/DragonsBlood.cs
+
+        Added: Scripts/Items/Skill Items/Magical/MysticSpellbook.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/AnimatedWeaponScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/BombardScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/CleansingWindsScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/EagleStrikeScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/EnchantScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/HailStormScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/HealingStoneScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/MassSleepScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/NetherBoltScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/NetherCycloneScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/PurgeMagicScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/RisingColossusScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/SleepScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/SpellPlagueScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/SpellTriggerScroll.cs
+        Added: Scripts/Items/Skill Items/Magical/Scrolls/Mysticism/StoneFormScroll.cs   
+ 
+        Added: Scripts/Mobiles/Monsters/Misc/Melee/AnimatedWeapon.cs
+
+        Added: Scripts/Spells/Mysticism/AnimatedWeaponSpell.cs
+        Added: Scripts/Spells/Mysticism/EagleStrikeSpell.cs
+        Added: Scripts/Spells/Mysticism/HailStormSpell.cs
+        Added: Scripts/Spells/Mysticism/MysticSpell.cs
+        Added: Scripts/Spells/Mysticism/NetherCycloneSpell.cs
+        Added: Scripts/Spells/Mysticism/SpellPlagueSpell.cs
+        Added: Scripts/Spells/Mysticism/StoneFormSpell.cs
+
+____________________________________________________________________________________________________________
+[x] Initial Distribution Finalized From RunUO v2.7                                | 04/11/2017 - 11.30.55 PM
+============================================================================================================
+
+    [o] Merged Repository Into The Visual Studio Master Solution File
+ 
+************************************************************************************************************

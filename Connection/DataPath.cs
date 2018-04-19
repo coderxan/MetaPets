@@ -1,0 +1,119 @@
+﻿using System;
+using System.IO;
+
+using Server;
+
+using Microsoft.Win32;
+
+namespace Server.Misc
+{
+    public class DataPath
+    {
+        #region Game Installation Configuration
+
+        /// <summary>
+        /// If you have not installed Ultima Online, or wish the server to use a 
+        /// seperate set of datafiles, change the 'CustomPath' value below. 
+        /// A value of null assumes the game is installed in your Windows Registry.
+        /// 
+        /// Example:
+        /// private static string CustomPath = @"C:\Program Files\Ultima Online";
+        /// </summary>
+
+        private static string CustomPath = null;
+
+        #endregion
+
+        #region Files Required To Run Emulation
+
+        /// <summary>
+        /// Map*.mul
+        /// MapDif*.mul
+        /// MapDifL*.mul
+        /// Multi.idx
+        /// Multi.mul
+        /// StaDif*.mul
+        /// StaDifI*.mul
+        /// StaDifL*.mul
+        /// StaIdx*.mul
+        /// Statics*.mul
+        /// TileData.mul
+        /// VerData.mul
+        /// </summary>
+
+        #endregion
+
+        public static void Configure()
+        {
+            string pathUO = GetPath(@"C:\Users\User\Desktop\runuo\7.0.12.1\Client", "ExePath");
+            string pathTD = GetPath(@"Origin Worlds Online\Ultima Online Third Dawn\1.0", "ExePath"); //These refer to 2D & 3D, not the Third Dawn expansion
+            string pathKR = GetPath(@"Origin Worlds Online\Ultima Online\KR Legacy Beta", "ExePath"); //After KR, This is the new registry key for the 2D client
+            string pathSA = GetPath(@"Electronic Arts\EA Games\Ultima Online Stygian Abyss Classic", "InstallDir");
+            string pathHS = GetPath(@"Electronic Arts\EA Games\Ultima Online Classic", "InstallDir");
+
+            if (CustomPath != null)
+                Core.DataDirectories.Add(CustomPath);
+
+            if (pathUO != null)
+                Core.DataDirectories.Add(pathUO);
+
+            if (pathTD != null)
+                Core.DataDirectories.Add(pathTD);
+
+            if (pathKR != null)
+                Core.DataDirectories.Add(pathKR);
+
+            if (pathSA != null)
+                Core.DataDirectories.Add(pathSA);
+
+            if (pathHS != null)
+                Core.DataDirectories.Add(pathHS);
+
+            if (Core.DataDirectories.Count == 0 && !Core.Service)
+            {
+                Console.WriteLine("Enter the Ultima Online directory:");
+                Console.Write("> ");
+
+                Core.DataDirectories.Add(Console.ReadLine());
+            }
+        }
+
+        private static string GetPath(string subName, string keyName)
+        {
+            try
+            {
+                string keyString;
+
+                if (Core.Is64Bit)
+                    keyString = @"SOFTWARE\Wow6432Node\{0}";
+                else
+                    keyString = @"SOFTWARE\{0}";
+
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(String.Format(keyString, subName)))
+                {
+                    if (key == null)
+                        return null;
+
+                    string v = key.GetValue(keyName) as string;
+
+                    if (String.IsNullOrEmpty(v))
+                        return null;
+
+                    if (keyName == "InstallDir")
+                        v = v + @"\";
+
+                    v = Path.GetDirectoryName(v);
+
+                    if (String.IsNullOrEmpty(v))
+                        return null;
+
+                    return v;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+}

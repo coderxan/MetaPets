@@ -1,0 +1,111 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+
+using Server;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
+using Server.Targeting;
+
+namespace Server.Items
+{
+    public class BaseAquariumFish : Item
+    {
+        private static readonly TimeSpan DeathDelay = TimeSpan.FromMinutes(5);
+
+        private Timer m_Timer;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool Dead
+        {
+            get { return (ItemID == 0x3B0C); }
+        }
+
+        [Constructable]
+        public BaseAquariumFish(int itemID)
+            : base(itemID)
+        {
+            StartTimer();
+        }
+
+        public BaseAquariumFish(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public virtual void StartTimer()
+        {
+            if (m_Timer != null)
+                m_Timer.Stop();
+
+            m_Timer = Timer.DelayCall(DeathDelay, new TimerCallback(Kill));
+
+            InvalidateProperties();
+        }
+
+        public virtual void StopTimer()
+        {
+            if (m_Timer != null)
+                m_Timer.Stop();
+
+            m_Timer = null;
+
+            InvalidateProperties();
+        }
+
+        public override void OnDelete()
+        {
+            StopTimer();
+        }
+
+        public virtual void Kill()
+        {
+            ItemID = 0x3B0C;
+            StopTimer();
+
+            InvalidateProperties();
+        }
+
+        public int GetDescription()
+        {
+            // TODO: This will never return "very unusual dead aquarium creature" due to the way it is killed
+            if (ItemID > 0x3B0F)
+                return Dead ? 1074424 : 1074422; // A very unusual [dead/live] aquarium creature
+            else if (Hue != 0)
+                return Dead ? 1074425 : 1074423; // A [dead/live] aquarium creature of unusual color
+
+            return Dead ? 1073623 : 1073622; // A [dead/live] aquarium creature
+        }
+
+        public override void GetProperties(ObjectPropertyList list)
+        {
+            base.GetProperties(list);
+
+            list.Add(GetDescription());
+
+            if (!Dead && m_Timer != null)
+                list.Add(1074507); // Gasping for air
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (!(Parent is Aquarium) && !(Parent is FishBowl))
+                StartTimer();
+        }
+    }
+}
